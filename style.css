@@ -1,103 +1,51 @@
-/* Base */
+/* Estilização global para todas as divs */
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to bottom, #1b1b1b, #121212);
-    color: #cccccc;
-    scroll-behavior: smooth;
-  }
-  
-  /* Navbar */
-  .navbar {
-    background: linear-gradient(to right, #1f1f1f, #111);
-    border-bottom: 1px solid #2a2a2a;
-  }
-  
-  .navbar-brand {
-    font-weight: bold;
-    color: #d1d1d1;
-  }
-  
-  .navbar-brand:hover {
-    color: #999999;
-  }
-  
-  .nav-link {
-    color: #aaaaaa !important;
-    font-weight: 500;
-  }
-  
-  .nav-link:hover {
-    color: #dddddd !important;
-  }
-  
-  /* Hero Section */
-  .hero {
-    background: linear-gradient(to bottom, #222222, #111111);
-    color: #dddddd;
-    padding: 100px 0;
-  }
-  
-  .hero .btn-light {
-    background-color: #333333;
-    color: #dddddd;
-    border: none;
-  }
-  
-  .hero .btn-light:hover {
-    background-color: #444444;
-    color: #f0f0f0;
-  }
-  
-  /* Section Titles */
-  .section-title {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 40px;
-    color: #dddddd;
-  }
-  
-  /* Cards */
-  .card {
-    background: linear-gradient(145deg, #202020, #181818);
-    border: 1px solid #2a2a2a;
-    border-radius: 10px;
-    color: #cccccc;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-  }
-  
-  /* Blog */
-  #blog {
-    background: linear-gradient(to bottom, #1d1d1d, #141414);
-  }
-  
-  #blog .card-title {
-    color: #e0e0e0;
-  }
-  
-  /* Accordion FAQ */
-  .accordion-button {
-    background-color: #252525;
-    color: #cccccc;
-    font-weight: 600;
-  }
-  
-  .accordion-button:not(.collapsed) {
-    background-color: #2f2f2f;
-    color: #e0e0e0;
-  }
-  
-  .accordion-body {
-    background-color: #1c1c1c;
-    color: #bbbbbb;
-  }
-  
-  /* Contato */
-  #contato {
-    background: linear-gradient(to bottom, #181818, #0f0f0f);
-  }
-  
+  color: #fff;
+}
+
+div {
+  background-color: #111; /* Preto fosco */
+  color: #fff; /* Texto branco puro */
+  padding: 10px;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* Divs container */
+div.container {
+  background-color: #111;
+}
+
+/* Cards */
+div.card {
+  background-color: #1a1a1a;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Corpo dos cards */
+div.card-body {
+  background-color: #222;
+}
+
+/* Accordion items */
+div.accordion-item {
+  background-color: #181818;
+  border: 1px solid #333;
+}
+
+/* Seções específicas */
+#servicos > div,
+#blog > div,
+#faq > div,
+#contato > div {
+  background-color: #111;
+}
+
+/* Footer */
+footer div {
+  background-color: #0a0a0a;
+  color: #ccc;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
