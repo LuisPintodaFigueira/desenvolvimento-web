@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>quer namorar comigo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#ffdde1; /* soft pink */
+      --bg2:#fceff1; /* lighter */
+      --accent:#d6336c; /* rose red */
+      --accent-dark:#a02245;
+      --glass: rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Montserrat', sans-serif;
+      background: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.5), transparent 10%), linear-gradient(135deg,var(--bg1),var(--bg2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:2rem;
+      overflow:hidden;
+      color:#4b022b;
+    }
+
+    .heart{
+      position:fixed;
+      font-size:26px;
+      opacity:0.9;
+      animation:float 8s infinite ease-in;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.12));
+      pointer-events:none;
+    }
+    @keyframes float{
+      0%{transform:translateY(0) scale(0.8); opacity:0}
+      10%{opacity:0.95}
+      50%{transform:translateY(-40vh) rotate(10deg) scale(1.1)}
+      100%{transform:translateY(-80vh) rotate(-20deg) scale(0.6); opacity:0}
+    }
+
+    .card{
+      width:min(920px,96vw);
+      max-width:920px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));
+      border-radius:24px;
+      padding:2.5rem;
+      box-shadow: 0 20px 60px rgba(182, 54, 95, 0.18);
+      text-align:center;
+      position:relative;
+      z-index:2;
+      overflow:hidden;
+    }
+
+    h1{
+      font-family: 'Great Vibes', cursive;
+      font-size:4.2rem;
+      margin:0 0 0.2rem 0;
+      letter-spacing:1px;
+      color:var(--accent-dark);
+      text-shadow: 0 2px 0 rgba(255,255,255,0.8), 0 6px 18px rgba(166,26,70,0.12);
+    }
+    p.lead{
+      margin:0 0 1.6rem 0;
+      font-size:1.05rem;
+      color:#5a1b2f;
+    }
+
+    .rose-row{
+      display:flex;gap:8px;justify-content:center;margin-bottom:1.25rem;flex-wrap:wrap
+    }
+    .rose{
+      font-size:28px;
+      transform:translateY(0);
+      animation:pop 1.6s infinite ease-in-out;
+    }
+    .rose:nth-child(2){animation-delay:.15s}
+    .rose:nth-child(3){animation-delay:.3s}
+    @keyframes pop{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+    .buttons{
+      display:flex;
+      gap:1rem;
+      justify-content:center;
+      margin-top:1.6rem;
+      flex-wrap:wrap;
+    }
+    button.btn{
+      --pad:14px 38px;
+      padding:var(--pad);
+      border-radius:12px;
+      border:2px solid rgba(255,255,255,0.4);
+      background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+      font-weight:600;
+      font-size:1.05rem;
+      cursor:pointer;
+      transition:transform .18s ease, box-shadow .18s ease;
+      box-shadow: 0 10px 30px rgba(166,26,70,0.09);
+      color:var(--accent-dark);
+      min-width:120px;
+    }
+    button.btn:active{transform:translateY(2px) scale(.99)}
+
+    button.yes{
+      background:linear-gradient(180deg, #ffd9e6, #ffb3c9);
+      border:2px solid var(--accent);
+      color:var(--accent-dark);
+      box-shadow: 0 12px 30px rgba(214,51,108,0.18);
+    }
+    button.no{
+      background:linear-gradient(180deg, #fff6f8, #ffeef2);
+      border:2px dashed rgba(166,26,70,0.2);
+      color:#8b3a4e;
+    }
+
+    .corner-rose{
+      position:absolute; width:160px; height:160px; opacity:0.12; z-index:1;
+    }
+    .corner-rose.left{left:-20px; top:-10px; transform:rotate(-12deg)}
+    .corner-rose.right{right:-20px; bottom:-10px; transform:rotate(12deg)}
+
+    .modal{
+      position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:60;visibility:hidden;opacity:0;transition:opacity .25s ease, visibility .25s ease;
+    }
+    .modal.show{visibility:visible;opacity:1}
+    .modal-inner{background:var(--glass);backdrop-filter: blur(6px);border-radius:20px;padding:2rem;min-width:320px;max-width:88vw;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.18)}
+    .modal-inner h2{font-family:'Great Vibes',cursive;font-size:2.6rem;margin:.2rem 0}
+    .modal-inner p{margin:.6rem 0 1rem 0}
+
+    footer{margin-top:1.2rem;font-size:.85rem;color:#7a3b4e}
+
+    /* responsive tweaks */
+    @media (max-width:520px){
+      h1{font-size:3rem}
+      .card{padding:1.6rem}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" role="main" aria-labelledby="main-title">
+    <img class="corner-rose left" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g fill='%23d6336c'><path d='M32 6c6 0 11 5 11 11s-5 11-11 11-11-5-11-11S26 6 32 6z'/></g></svg>" alt="" aria-hidden="true">
+    <img class="corner-rose right" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g fill='%23a02245'><path d='M32 6c6 0 11 5 11 11s-5 11-11 11-11-5-11-11S26 6 32 6z'/></g></svg>" alt="" aria-hidden="true">
+
+    <h1 id="main-title">Quer chupar meu pinto?</h1>
+    <p class="lead">Eu prometo carinho e muita pika 🌹 Me responde com o coração 💖</p>
+
+    <div class="rose-row" aria-hidden="true">
+      <div class="rose">🌹</div>
+      <div class="rose">🌹</div>
+      <div class="rose">🌹</div>
+      <div class="rose">🌹</div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn yes" id="yesBtn">Sim ❤️</button>
+      <button class="btn no" id="noBtn">Não 💔</button>
+    </div>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-inner" role="document">
+      <p id="modal-text">chupa! </p>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:12px">
+        <button class="btn yes" id="modalOk">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <audio id="bgMusic" loop preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2021/08/09/audio_5f8a1b5cb9.mp3?filename=romantic-piano-12150.mp3" type="audio/mpeg">
+  Seu navegador não suporta áudio embutido.
+</audio>
+
+  <script>
+    const heartChars = ['❤️','💖','💕','💘'];
+    function spawnHearts(count=8){
+      for(let i=0;i<count;i++){
+        const h = document.createElement('div');
+        h.className='heart';
+        h.style.left = Math.random()*100 + 'vw';
+        h.style.top = (60 + Math.random()*30) + 'vh';
+        h.style.fontSize = (14+Math.random()*36)+'px';
+        h.style.animationDuration = (6+Math.random()*8)+'s';
+        h.style.opacity = (0.6+Math.random()*0.4);
+        h.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
+        document.body.appendChild(h);
+        setTimeout(()=> h.remove(), 14000);
+      }
+    }
+    spawnHearts(10);
+    setInterval(()=>spawnHearts(3),2200);
+
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalText = document.getElementById('modal-text');
+    const modalOk = document.getElementById('modalOk');
+    const bgMusic = document.getElementById('bgMusic');
+
+    function tryPlayMusic(){
+      bgMusic.play().catch(()=>{});
+    }
+    document.addEventListener('click', tryPlayMusic, {once:true});
+
+    yesBtn.addEventListener('click', () => {
+    modalText.innerHTML = `
+    <div style="
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      color: #ff1493;
+      text-shadow: 2px 2px 8px #ff69b4;
+      text-align: center;
+      animation: pulse 1.5s infinite;
+    ">
+      💖 CHUPAAAAA 💖
+    </div>`;
+    ; showModal();
+     spawnHearts(30);
+    });
+
+    noBtn.addEventListener('mouseenter', ()=>{
+      const r = noBtn.getBoundingClientRect();
+      const x = Math.random()* (window.innerWidth - r.width - 40);
+      const y = Math.random()* (window.innerHeight - r.height - 40);
+      noBtn.style.position='fixed';
+      noBtn.style.left = Math.max(8, Math.min(x, window.innerWidth - r.width - 8)) + 'px';
+      noBtn.style.top = Math.max(8, Math.min(y, window.innerHeight - r.height - 8)) + 'px';
+    });
+
+    noBtn.addEventListener('click', ()=>{
+      modalTitle.textContent = 'Ah... 💔';
+      modalText.textContent = 'Tudo bem — eu respeito. Obrigado por ser sincero(a).';
+      showModal();
+    });
+
+    function showModal(){
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+    }
+    modalOk.addEventListener('click', ()=>{
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+    });
+
+    document.addEventListener('keydown', e =>{
+      if(e.key === 'Enter') yesBtn.click();
+      if(e.key === 'Escape') modalOk.click();
+    });
+
+    window.addEventListener('load', () => {
+    bgMusic.play().catch(() => {
+      document.addEventListener('click', () => {
+        bgMusic.play();
+      }, { once: true });
+    });
+  });
+  </script>
+</body>
+</html>
