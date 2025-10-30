@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do List - Conectado ao Servidor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      margin-top: 40px;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      width: 420px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    input, select, button {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    button {
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    .tarefa {
+      background: #f9f9f9;
+      border-left: 5px solid #4CAF50;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+    }
+
+    .tarefa.concluida {
+      border-left-color: #888;
+      background: #e0e0e0;
+      text-decoration: line-through;
+    }
+
+    .status {
+      color: #555;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Minha To-Do List</h1>
+
+    <div class="inputs">
+      <input type="text" id="descricao" placeholder="Descrição da tarefa">
+
+      <select id="status">
+        <option value="">Selecione o status</option>
+        <option value="pendente">Pendente</option>
+        <option value="em andamento">Em andamento</option>
+        <option value="concluída">Concluída</option>
+      </select>
+
+      <input type="date" id="dataConclusao">
+
+      <button id="criar">Criar Tarefa</button>
+    </div>
+
+    <h3>Tarefas:</h3>
+    <div id="lista"></div>
+  </div>
+
+  <script>
+    const API_URL = "http://192.168.248.250:8080/tasks";
+
+    async function carregarTarefas() {
+      try {
+        const resposta = await fetch(API_URL);
+        const tarefas = await resposta.json();
+
+        const lista = document.getElementById("lista");
+        lista.innerHTML = "";
+
+        tarefas.forEach(t => {
+          const div = document.createElement("div");
+          div.className = "tarefa" + (t.status === "concluída" ? " concluida" : "");
+          div.innerHTML = `
+            <strong>${t.descricao}</strong><br>
+            <span class="status">Status: ${t.status}</span><br>
+            <span class="status">Data de conclusão: ${t.dataConclusao || "-"}</span>
+          `;
+          lista.appendChild(div);
+        });
+      } catch (erro) {
+        console.error("Erro ao carregar tarefas:", erro);
+      }
+    }
+
+    async function criarTarefa() {
+      const descricao = document.getElementById("descricao").value.trim();
+      const status = document.getElementById("status").value;
+      const dataConclusao = document.getElementById("dataConclusao").value;
+
+      if (!descricao || !status) {
+        alert("Preencha a descrição e o status!");
+        return;
+      }
+
+      const novaTarefa = {
+        descricao,
+        status,
+        dataConclusao: dataConclusao || null
+      };
+
+      try {
+        await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(novaTarefa)
+        });
+
+        // Limpar campos
+        document.getElementById("descricao").value = "";
+        document.getElementById("status").value = "";
+        document.getElementById("dataConclusao").value = "";
+
+        carregarTarefas();
+      } catch (erro) {
+        console.error("Erro ao criar tarefa:", erro);
+        alert("Falha ao criar tarefa. Verifique a conexão com o servidor.");
+      }
+    }
+
+    document.getElementById("criar").addEventListener("click", criarTarefa);
+
+    // Carregar tarefas ao abrir a página
+    carregarTarefas();
+  </script>
+</body>
+</html>
