@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão Financeira</title>
+</head>
+<body>
+    <h1>Gestão de Transações Financeiras</h1>
+
+    <form id="formTransacao">
+        <input type="hidden" id="idTransacao">
+        <label>Descrição:</label>
+        <input type="text" id="descricao" required>
+        <label>Valor:</label>
+        <input type="number" id="valor" step="0.01" required>
+        <label>Tipo:</label>
+        <select id="tipo" required>
+            <option value="">Selecione</option>
+            <option value="Receita">Receita</option>
+            <option value="Despesa">Despesa</option>
+        </select>
+        <label>Data:</label>
+        <input type="date" id="data" required>
+        <button type="submit" id="btnSalvar">Adicionar Transação</button>
+    </form>
+
+    <h2>Listagem de Transações</h2>
+    <table border="1"width="100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Tipo</th>
+                <th>Data</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaTransacoes"></tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>
